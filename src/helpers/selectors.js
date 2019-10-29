@@ -16,3 +16,14 @@ export function getAppointmentsForDay(state, day) {
 
   return dayAppointments;
 }
+
+export function getInterview(state, interview) {
+  if (!interview) {
+    return null;
+  }
+  const fullInterview = {...interview}; // Copy of interview so we dont change it!
+
+  fullInterview.interviewer = state.interviewers[interview.interviewer];
+
+  return fullInterview;
+}
