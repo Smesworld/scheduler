@@ -9,7 +9,7 @@ export default function useVisualMode(initial) {
       history.pop()
     }
 
-    setHistory(prev => [...prev, mode])
+    setHistory(current => [...current, mode])
     setMode(mode)
   }
 
