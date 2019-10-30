@@ -27,3 +27,22 @@ export function getInterview(state, interview) {
 
   return fullInterview;
 }
+
+export function getInterviewersForDay(state, day) {
+  let stateDay;
+  let dayInterviewers;
+
+  if (state.days.length === 0) {
+    return [];
+  }
+  stateDay = state.days.find(stateDay => stateDay.name === day);
+
+  if (!stateDay) {
+    return [];
+  }
+
+  dayInterviewers = stateDay.interviewers;
+  dayInterviewers = dayInterviewers.map(interviewer => state.interviewers[interviewer]);
+
+  return dayInterviewers;
+}
