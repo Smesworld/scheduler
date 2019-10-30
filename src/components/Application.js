@@ -28,11 +28,10 @@ export default function Application(props) {
     
     return axios.put(`http://localhost:8001/api/appointments/${id}`, appointment)
       .then((response) => {
-        // console.log
-        setState({
-          ...state,
+        setState((prev) => ({
+          ...prev,
           appointments
-        })
+        }))
       })
       .catch((error) => {
         console.log(error);
@@ -40,9 +39,28 @@ export default function Application(props) {
 
   }
 
-function cancelInterview(id) {
-  console.log(id);
-}
+  function cancelInterview(id) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    
+    return axios.delete(`http://localhost:8001/api/appointments/${id}`, appointment)
+      .then((response) => {
+        setState((prev) => ({
+          ...prev,
+          appointments
+        }))
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  }
   
   const setDay = day => setState({ ...state, day });
 
