@@ -27,15 +27,15 @@ export default function Application(props) {
     };
     
     return axios.put(`http://localhost:8001/api/appointments/${id}`, appointment)
-      .then((response) => {
+      .then(() => {
         setState((prev) => ({
           ...prev,
           appointments
         }))
       })
-      .catch((error) => {
-        console.log(error);
-      })
+      // .catch((error) => {
+      //   console.log(error);
+      // })
 
   }
 
@@ -51,15 +51,15 @@ export default function Application(props) {
     };
     
     return axios.delete(`http://localhost:8001/api/appointments/${id}`, appointment)
-      .then((response) => {
+      .then(() => {
         setState((prev) => ({
           ...prev,
           appointments
         }))
       })
-      .catch((error) => {
-        console.log(error);
-      })
+      // .catch((error) => {
+      //   console.log(error);
+      // })
   }
   
   const setDay = day => setState({ ...state, day });
