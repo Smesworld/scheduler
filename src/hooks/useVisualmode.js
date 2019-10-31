@@ -10,8 +10,6 @@ export default function useVisualMode(initial) {
     }
     setHistory(prev => [...prev, mode]);
     setMode(mode);
-
-    console.log(history)
   }
 
   function back() {
@@ -20,8 +18,6 @@ export default function useVisualMode(initial) {
       newHistory.pop()
       setHistory(newHistory)
       setMode(newHistory[newHistory.length - 1])
-
-      console.log(history)
     }
   }
 
