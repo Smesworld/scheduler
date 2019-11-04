@@ -20,6 +20,7 @@ const CONFIRM = "CONFIRM";
 
 const ERROR_SAVE = "ERROR_SAVE";
 const ERROR_DELETE = "ERROR_DELETE";
+const ERROR_INPUT = "ERROR_INPUT";
 
 export default function Appointment(props) {
   const { mode, transition, back } = useVisualMode(
@@ -53,7 +54,6 @@ export default function Appointment(props) {
         console.log(error)
         transition(ERROR_DELETE, true);
       });
-
   }
   
   function cancel() {
@@ -115,6 +115,12 @@ export default function Appointment(props) {
       {mode === ERROR_DELETE && (
         <Error
           message="Error deleting appointment."
+          onClose={() => back()}
+        />
+      )}
+      {mode === ERROR_INPUT && (
+        <Error
+          message="Invalid student or interviewer."
           onClose={() => back()}
         />
       )}
