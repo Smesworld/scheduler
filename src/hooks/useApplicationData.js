@@ -31,20 +31,27 @@ const reducerLookup = {
     const appointment = {
       ...state.appointments[action.value.id]
     };
+    const days = [ ...state.days ];
 
     if (!appointment.interview && action.value.interview) {
-      state.days.forEach((day) => {
+      days.forEach((day, index, array) => {
+        const newDay = { ...day };
         if (day.appointments.includes(action.value.id)) {
-          day.spots -= 1;
+          newDay.spots -= 1;
         }
+
+        array[index] = newDay;
       });
     }
 
     if (appointment.interview && !action.value.interview) {
-     state.days.forEach((day) => {
+      days.forEach((day, index, array) => {
+        const newDay = { ...day };
         if (day.appointments.includes(action.value.id)) {
-          day.spots += 1;
+          newDay.spots += 1;
         }
+
+        array[index] = newDay;
       }); 
     }
 
@@ -57,6 +64,7 @@ const reducerLookup = {
 
     return { 
       ...state,
+      days: days,
       appointments: appointments
     }
   }
