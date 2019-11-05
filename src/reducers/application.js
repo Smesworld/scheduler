@@ -8,13 +8,13 @@ const reducerLookup = {
     return {
       ...state,
       webSocket: new WebSocket(process.env.REACT_APP_WEBSOCKET_URL)
-    }
+    };
   },
   SET_DAY: (state, action) => {
     return {
       ...state,
       day: action.value
-    }
+    };
   },
   SET_APPLICATION_DATA: (state, action) => {
     return {
@@ -22,36 +22,32 @@ const reducerLookup = {
       days: action.value[0].data,
       appointments: action.value[1].data,
       interviewers: action.value[2].data
-    }
+    };
   },
   SET_INTERVIEW: (state, action) => {
+    // copy current interview for id
     const appointment = {
       ...state.appointments[action.value.id]
     };
+
+    // create shallow copy of days and each day
     const days = [ ...state.days ];
+    days.forEach((day, index, array) => {
+      const newDay = { ...day };
 
-    if (!appointment.interview && action.value.interview) {
-      days.forEach((day, index, array) => {
-        const newDay = { ...day };
-        if (day.appointments.includes(action.value.id)) {
-          newDay.spots -= 1;
-        }
+      // if no interview in this appointment & adding an interview & this appointment is on this day
+      if (!appointment.interview && action.value.interview && day.appointments.includes(action.value.id)) {
+        newDay.spots -= 1;
+      }
+      // if an interview in this appointment & removing an interview & this appointment is on this day
+      if (appointment.interview && !action.value.interview && day.appointments.includes(action.value.id)) {
+        newDay.spots += 1;
+      }
 
-        array[index] = newDay;
-      });
-    }
+      array[index] = newDay;
+    });
 
-    if (appointment.interview && !action.value.interview) {
-      days.forEach((day, index, array) => {
-        const newDay = { ...day };
-        if (day.appointments.includes(action.value.id)) {
-          newDay.spots += 1;
-        }
-
-        array[index] = newDay;
-      }); 
-    }
-
+    // update interview based on action
     appointment.interview = action.value.interview ? { ...action.value.interview } : null
 
     const appointments = {
@@ -63,9 +59,9 @@ const reducerLookup = {
       ...state,
       days: days,
       appointments: appointments
-    }
+    };
   }
-}
+};
 
 export default function reducer(state, action) {
   if (reducerLookup[action.type]) {
@@ -75,4 +71,4 @@ export default function reducer(state, action) {
   throw new Error(
     `Tried to reduce with unsupported action type: ${action.type}`
   );
-}
+};

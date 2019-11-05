@@ -12,7 +12,7 @@ export default function DayList(props) {
         setDay={(event) => props.setDay(day.name)}
       />
     );
-  })
+  });
 
   return <ul>{days}</ul>;
-}
+};

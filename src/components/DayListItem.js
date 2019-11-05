@@ -15,7 +15,7 @@ const formatSpots = (spots) => {
   }
 
   return spotString;
-}
+};
 
 export default function DayListItem(props) {
   const dayClass = classNames( "day-list__item", {
@@ -29,4 +29,4 @@ export default function DayListItem(props) {
       <h3 className="text--light">{formatSpots(props.spots)}</h3>
     </li>
   );
-}
+};

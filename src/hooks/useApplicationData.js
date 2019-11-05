@@ -1,5 +1,5 @@
 import { useEffect, useReducer } from "react";
-import axios from "axios"
+import axios from "axios";
 
 import reducer, { SET_WEBSOCKET, SET_DAY, SET_APPLICATION_DATA, SET_INTERVIEW} from "reducers/application";
 
@@ -13,10 +13,10 @@ export default function useApplicationData() {
   });
 
   if (state.webSocket) {
-    state.webSocket.onopen = function (event) {
+    state.webSocket.onopen = () => {
       state.webSocket.send("ping");
     }
-    state.webSocket.onmessage = function (event) {
+    state.webSocket.onmessage = (event) => {
       const data = JSON.parse(event.data);
   
       if (data.type) {    
@@ -26,7 +26,7 @@ export default function useApplicationData() {
   }
 
   useEffect(() => {
-    dispatch({ type: SET_WEBSOCKET })
+    dispatch({ type: SET_WEBSOCKET });
 
     Promise.all([
       axios.get(`/api/days`),
@@ -43,7 +43,7 @@ export default function useApplicationData() {
   }, []);
 
 
-  function bookInterview(id, interview) {
+  const bookInterview = (id, interview) => {
     const newInterview = state.appointments[id].interview ? false : true;
 
     const appointment = {
@@ -53,12 +53,12 @@ export default function useApplicationData() {
 
     return axios.put(`/api/appointments/${id}`, appointment)
     .then(() => {
-      dispatch({ type: SET_INTERVIEW, value: {interview, id, newInterview}})
-    })
+      dispatch({ type: SET_INTERVIEW, value: {interview, id, newInterview}});
+    });
 
-  }
+  };
 
-  function cancelInterview(id) {
+  const cancelInterview = (id) => {
     const appointment = {
       ...state.appointments[id],
       interview: null
@@ -66,13 +66,13 @@ export default function useApplicationData() {
     
     return axios.delete(`/api/appointments/${id}`, appointment)
       .then(() => {
-        dispatch({ type: SET_INTERVIEW, value: {interview: null, id, newInterview: false, deleteInterview: true}})
-      })
-  }
+        dispatch({ type: SET_INTERVIEW, value: {interview: null, id, newInterview: false, deleteInterview: true}});
+      });
+  };
   
-  const setDay = day => dispatch({ type: SET_DAY, value: day })
+  const setDay = day => dispatch({ type: SET_DAY, value: day });
 
 
 
   return { state, setDay, bookInterview, cancelInterview };
-}
+};

@@ -2,9 +2,9 @@ import React from "react";
 
 import "components/Application.scss";
 import DayList from "components/DayList";
-import Appointment from "components/Appointment"
+import Appointment from "components/Appointment";
 import useApplicationData from "../hooks/useApplicationData";
-import { getAppointmentsForDay, getInterviewersForDay, getInterview } from "helpers/selectors.js"
+import { getAppointmentsForDay, getInterviewersForDay, getInterview } from "helpers/selectors.js";
 
 export default function Application(props) {
   const { state, setDay, bookInterview, cancelInterview } = useApplicationData();
@@ -13,7 +13,7 @@ export default function Application(props) {
   const interviewers = getInterviewersForDay(state, state.day);
 
   const appointmentList = appointments.map(appointment => {
-    const interview = getInterview(state, appointment.interview)
+    const interview = getInterview(state, appointment.interview);
 
     return (
       <Appointment
@@ -24,8 +24,8 @@ export default function Application(props) {
         bookInterview={bookInterview}
         cancelInterview={cancelInterview}
       />
-    )
-  })
+    );
+  });
 
   return (
     <main className="layout">
@@ -58,4 +58,4 @@ export default function Application(props) {
       </section>
     </main>
   );
-}
+};

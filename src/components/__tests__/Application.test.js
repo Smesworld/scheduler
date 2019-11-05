@@ -1,6 +1,16 @@
 import React from "react";
 
-import { render, cleanup, waitForElement, fireEvent, getByText, prettyDOM, getAllByTestId, getByAltText, getByPlaceholderText, queryByText, queryByAltText } from "@testing-library/react";
+import { render,
+    cleanup,
+    waitForElement,
+    fireEvent,
+    getByText,
+    getAllByTestId,
+    getByAltText,
+    getByPlaceholderText,
+    queryByText,
+    queryByAltText 
+  } from "@testing-library/react";
 
 import Application from "components/Application";
 
@@ -72,8 +82,6 @@ describe("Application", () => {
   it("loads data, edits an interview and keeps the spots remaining for Monday the same", async () => {
     const { container } = render(<Application />);
 
-    // console.log(prettyDOM(container));
-
     await waitForElement(() => getByText(container, "Archie Cohen"));    
 
     const appointments = getAllByTestId(container, "appointment");
@@ -96,7 +104,7 @@ describe("Application", () => {
     const day = days.find((element) => queryByText(element, "Monday"));
 
     expect(getByText(day, "1 spot remaining")).toBeInTheDocument();
-  })
+  });
 
   it("shows the save error when failing to save an appointment", async () => {
     axios.put.mockRejectedValueOnce();

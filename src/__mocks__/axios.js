@@ -80,17 +80,16 @@ export default {
       });
     }
   }),
-  put: jest.fn((url, appointment) => {
+  put: jest.fn(() => {
     return Promise.resolve({
       status: 204,
       statusText: "No Content"
-    })
+    });
   }),
-  delete: jest.fn((url, id) => {
-    // fixtures.appointments[url[url.length - 1]].interview = null;
+  delete: jest.fn(() => {
     return Promise.resolve({
       status: 204,
       statusText: "No Content"
-    })
+    });
   })
-}
+};
