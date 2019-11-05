@@ -28,25 +28,36 @@ const reducerLookup = {
     }
   },
   SET_INTERVIEW: (state, action) => {
-    if (action.value.newInterview) {
+    const appointment = {
+      ...state.appointments[action.value.id]
+    };
+
+    if (!appointment.interview && action.value.interview) {
       state.days.forEach((day) => {
         if (day.appointments.includes(action.value.id)) {
           day.spots -= 1;
         }
       });
-    } 
-    
-    if (action.value.deleteInterview) {
-      state.days.forEach((day) => {
+    }
+
+    if (appointment.interview && !action.value.interview) {
+     state.days.forEach((day) => {
         if (day.appointments.includes(action.value.id)) {
           day.spots += 1;
         }
       }); 
     }
 
+    appointment.interview = action.value.interview ? { ...action.value.interview } : null
+
+    const appointments = {
+      ...state.appointments,
+      [action.value.id]: appointment
+    };
+
     return { 
       ...state,
-      appointments: action.value.appointments
+      appointments: appointments
     }
   }
 }
@@ -71,21 +82,8 @@ export default function useApplicationData() {
     state.webSocket.onmessage = function (event) {
       const data = JSON.parse(event.data);
   
-      if (data.type) {
-        const newInterview = state.appointments[data.id].interview ? false : true;
-        const deleteInterview = data.interview ? false : true;
-  
-        const appointment = {
-          ...state.appointments[data.id],
-          interview: data.interview ? { ...data.interview } : null
-        };
-    
-        const appointments = {
-          ...state.appointments,
-          [data.id]: appointment
-        };
-  
-        dispatch({ type: data.type, value: {appointments, id: data.id, newInterview, deleteInterview}});
+      if (data.type) {    
+        dispatch({ type: data.type, value: {interview: data.interview, id: data.id}});
       }
     }
   }
@@ -102,7 +100,7 @@ export default function useApplicationData() {
         dispatch({ type: SET_APPLICATION_DATA, value: all})
       })
       .catch((error) => {
-        console.log(error);
+        console.log("Bad things", error);
       });
 
   }, []);
@@ -116,14 +114,9 @@ export default function useApplicationData() {
       interview: { ...interview }
     };
 
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-
     return axios.put(`/api/appointments/${id}`, appointment)
     .then(() => {
-      dispatch({ type: SET_INTERVIEW, value: {appointments, id, newInterview}})
+      dispatch({ type: SET_INTERVIEW, value: {interview, id, newInterview}})
     })
 
   }
@@ -136,7 +129,7 @@ export default function useApplicationData() {
     
     return axios.delete(`/api/appointments/${id}`, appointment)
       .then(() => {
-        // dispatch({ type: SET_INTERVIEW, value: {appointments, id, deleteInterview: true}})
+        dispatch({ type: SET_INTERVIEW, value: {interview: null, id, newInterview: false, deleteInterview: true}})
       })
   }
   
