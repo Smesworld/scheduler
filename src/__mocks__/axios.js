@@ -79,5 +79,12 @@ export default {
         data: fixtures.interviewers
       });
     }
+  }),
+  put: jest.fn((url, appointment) => {
+    fixtures.appointments[1].interview = appointment;
+    return Promise.resolve({
+      status: 204,
+      statusText: "No Content"
+    })
   })
 }

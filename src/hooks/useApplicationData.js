@@ -121,7 +121,7 @@ export default function useApplicationData() {
       [id]: appointment
     };
 
-    return axios.put(`http://localhost:8001/api/appointments/${id}`, appointment)
+    return axios.put(`/api/appointments/${id}`, appointment)
     .then(() => {
       dispatch({ type: SET_INTERVIEW, value: {appointments, id, newInterview}})
     })
@@ -134,7 +134,7 @@ export default function useApplicationData() {
       interview: null
     };
     
-    return axios.delete(`http://localhost:8001/api/appointments/${id}`, appointment)
+    return axios.delete(`/api/appointments/${id}`, appointment)
       .then(() => {
         // dispatch({ type: SET_INTERVIEW, value: {appointments, id, deleteInterview: true}})
       })
