@@ -15,14 +15,14 @@ export default function useApplicationData() {
   if (state.webSocket) {
     state.webSocket.onopen = () => {
       state.webSocket.send("ping");
-    }
+    };
     state.webSocket.onmessage = (event) => {
       const data = JSON.parse(event.data);
   
       if (data.type) {    
         dispatch({ type: data.type, value: {interview: data.interview, id: data.id}});
       }
-    }
+    };
   }
 
   useEffect(() => {
@@ -34,7 +34,7 @@ export default function useApplicationData() {
       axios.get(`/api/interviewers`)
     ])
       .then((all) => {
-        dispatch({ type: SET_APPLICATION_DATA, value: all})
+        dispatch({ type: SET_APPLICATION_DATA, value: all});
       })
       .catch((error) => {
         console.log(error);
@@ -59,12 +59,7 @@ export default function useApplicationData() {
   };
 
   const cancelInterview = (id) => {
-    const appointment = {
-      ...state.appointments[id],
-      interview: null
-    };
-    
-    return axios.delete(`/api/appointments/${id}`, appointment)
+    return axios.delete(`/api/appointments/${id}`)
       .then(() => {
         dispatch({ type: SET_INTERVIEW, value: {interview: null, id, newInterview: false, deleteInterview: true}});
       });
