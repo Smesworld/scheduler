@@ -5,9 +5,9 @@ Interview Scheduler uses React to render a page displaying, creating, removing, 
 ## Final Product
 ![Screenshot of appointment list with hover](https://github.com/Smesworld/scheduler/blob/master/docs/appointment-hover.png)
 
-![Screenshot of new appointment with error](https://github.com/Smesworld/scheduler/blob/master/docs/new-appointment-error.png)
+![Screenshot of new appointment](https://github.com/Smesworld/scheduler/blob/master/docs/new-appointment.png)
 
-![Screenshot of deleting appointment](https://github.com/Smesworld/scheduler/blob/master/docs/delete-appointment.png)
+![Screenshot of deleting appointment](https://github.com/Smesworld/scheduler/blob/master/docs/confirm-delete.png)
 
 ## Setup
 
