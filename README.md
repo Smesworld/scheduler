@@ -2,9 +2,14 @@
 
 Interview Scheduler uses React to render a page displaying, creating, removing, and editing interviews. It uses a webpack server to serve pages, maintain state, and make calls to a postgres server to persist the data. This implementation takes advantage of web-sockets to ensure all users are updated with changes made by others.
 
+## Final Product
+![Screenshot of new appointment with error](https://github.com/Smesworld/scheduler/blob/master/docs/new-appointment-error.png)
+
+![Screenshot of deleting appointment](https://github.com/Smesworld/scheduler/blob/master/docs/delete-appointment.png)
+
 ## Setup
 
-Install dependencies with `npm install`.
+Install dependencies with `npm install`. The server used for connecting to the appointments database and instructions for its setup can be found at [Scheduler-api](https://github.com/lighthouse-labs/scheduler-api).
 
 ## Running Webpack Development Server
 
